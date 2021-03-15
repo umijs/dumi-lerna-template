@@ -3,6 +3,14 @@
     "target": "esnext",
     "moduleResolution": "node",
     "jsx": "preserve",
-    "esModuleInterop": true
+    "allowJs": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "declaration": true,
+    "skipLibCheck": true
   }
 }

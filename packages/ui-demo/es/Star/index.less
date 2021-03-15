@@ -1,0 +1,27 @@
+@import '~@alitajs/theme/es/index.less';
+@import '~@alitajs/theme/es/mixins/icon.less';
+
+@prefixCls: alita-star;
+@starSize: 24 * @hd;
+
+.@{prefixCls} {
+    &-item {
+        display: inline-block;
+        width: @starSize;
+        height: @starSize;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    &-light {
+        .svg-star-light();
+    }
+
+    &-half {
+        .svg-star-half();
+    }
+
+    &-default {
+        .svg-star-default();
+    }
+}
