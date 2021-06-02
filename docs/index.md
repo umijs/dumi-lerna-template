@@ -1,140 +1,57 @@
 ---
-title: antd-mobile-plus - 基于 antd-mobile 的业务组件
-order: 1
+title: dumi - A doc tool can assist you to develop libraries & write docs.
+order: 10
 hero:
-  title: antd-mobile-plus
-  desc: 📖 基于 antd-mobile 的业务组件
+  title: dumi
+  desc: 📖 A doc tool can assist you to develop libraries & write docs.
   actions:
-    - text: 快速上手
-      link: /components
-
-footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by xiaohuoni
+    - text: Getting Started
+      link: /components/foo
+features:
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
+    title: Out of the box
+    desc: Elegant default configrations and convention routing assist developers to get started as simple as possible, that focus all attentions on developing libraries & writting docs
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
+    title: For developing libraries
+    desc: Rich Markdown extensions are not limited to rendering component demos, making component documents not only easy to write and manage, but also beautiful and easy to use
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/b8570f4d-c1b1-45eb-a1da-abff53159967/kj9t990h_w144_h144.png
+    title: Theme system
+    desc: Progressive custom theme capabilities, ranging from expanding your own Markdown tags to customizing complete theme packages, are up to you
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/b3e102cd-5dad-4046-a02a-be33241d1cc7/kj9t8oji_w144_h144.png
+    title: API automatically generated
+    desc: Component API can be automatically generated based on TypeScript type definitions, and components will always be『the same in appearance』
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/3863e74a-7870-4874-b1e1-00a8cdf47684/kj9t7ww3_w144_h144.png
+    title: Mobile component library development
+    desc: Install the theme package to quickly enable mobile component R&D capabilities, built-in mobile HD rendering solution
+  - icon: https://gw.alipayobjects.com/zos/bmw-prod/f093e060-726e-471c-a53e-e988ed3f560c/kj9t9sk7_w144_h144.png
+    title: Asset dataization capabilities
+    desc: One-line command digitizes component assets, and standardized asset data can be connected with downstream productivity tools
+footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by self
 ---
 
-# antd-mobile-plus
+## Getting Started
 
-这是一个使用 antd-mobile@3 中的规范，从新规划的基于 antd-mobile@2 组件的基础上开发的业务组件。
+Create first doc in manual way
 
-其中包含了一些约定和规范，任何参加此项目维护的朋友，都必须保持一下约定，如果你也需要基于 antd-mobile@2 构建你自己的组件，那你可以参考本项目的编写规范和约定。这将会帮助你更好的组织代码，和更好的使用 dumi。如果你觉得有些设计错误，请及时指出，再次谢过。
+```bash
+// Create dir for libraries
+$ mkdir library && cd library
 
->> 关于名字，因为我们已经有一个基于 antd 的业务组件 [ant-design-plus](https://github.com/alitajs/ant-design-plus) ，用于 pc 端的页面开发,因此在没有想到更好的名字之前，暂定这个名字。
+// Install dumi
+$ npm i dumi
 
-## 样式
+// Create docs
+$ mkdir docs && echo '# Hello dumi!' > docs/index.md
 
-组件的样式编写与业务重的样式编写一致，但引入的方式不同，不适用 CSS Module 的方式引入。因此样式和组件中需要声明相同的前缀，如
-
-```less
-@prefixCls: alita-demo;
+// Preview docs
+$ npx dumi dev
 ```
 
-```ts | pure
-const prefixCls = 'alita-demo';
-```
+## Feedback
 
-样式编写的时候需要额外引入所有的 less 变量，在编写样式的时候，（暂时只要求颜色）必须使用系统带的系统变量，如果系统中没有适合的变量，需要在 `@alitajs/theme` 包中增加一个。
+Please visit [GitHub](https://github.com/umijs/dumi) or join the discuss group
 
-一个最基础的 less 文件组成为：
-
-```less
-@import '~@alitajs/theme/es/index.less';;
-
-@prefixCls: alita-demo;
-
-.@{prefixCls} {
-  background-color: @brand-error;
-}
-```
-
-如果在组件中使用到 antd-mobile 的组件，需要使用按需引入的方式来使用，如使用 button：
-
-`
-import Button from 'antd-mobile/lib/button';
-`
-
-需要在 less 文件中，额外引入样式 
-
-`@import '~antd-mobile/lib/button/style/index';`
-
-## 埋点和异常
-
-异常信息收集，导出组件必须使用从 `@alitajs/tracker` 导出的 `withError` 包裹。这将会收集组件内部错误和组件渲染错误。
-
-数据埋点，则需要手动在组件中添加：
-
-```ts | pure
-import { useTracker } from '@alitajs/tracker';
-export const DemoComponent: React.FC<DemoPropsType> = (props) => {
-  const { onClick } = props;
-
-  const log = useTracker(DemoComponent.displayName, {
-    type:"primary",
-  });
-
-  return (
-    <Button
-      type="primary"
-      onClick={(e) => {
-        onClick && onClick(e);
-        log('onClick');
-      }}
-    >
-      点击收集事件
-    </Button>
-  );
-};
-
-DemoComponent.displayName = 'DemoComponent';
-
-
-export default withError(DemoComponent);
-```
-
-如上所示，所有需要埋点的事件都需要调用 log 方法。这样项目中就不需要单独埋点。
-
-在实际框架中，会通过 `setTracker` 重置这个 log 方法，将数据推送到私有服务上。在数据埋点平台和统一日志平台上将会产生作用。
-
-## 多语言国际化
-
-有需要用到文字的地方，都需要支持多语言。组件中使用如下方式取到需要的值。
-
-在 `packages/languages/src` 文件夹下，新建和你组件同名的文件夹，在其中添加两个文件，`en_US.ts` 和 `zh_CN.ts`。
-编写你需要的变量，如
-
-```ts
-export default {
-  text: '世界，你好！',
-}
-```
-
-在主入口文件中引入自定义的多语言文件。如 `packages/languages/src/zh_CN.ts`
-
-```diff
-import { LocaleType } from './LocaleType'
-import DemoComponent from './DemoComponent/zh_CN'
-+ import Demo from './Demo/zh_CN'
-
-export default {
-  locale: 'zh_CN' as LocaleType,
-  DemoComponent,
-+ Demo,
-}
-
-```
-
-这样在组件中，可以通过如下hooks方法取值。
-
-```ts
-import useCompleteLocale from '../LocaleProvider/useCompleteLocale';
-export const Demo: React.FC = (props) => {
-  const lang = useCompleteLocale()
-
-  // 此处表示文件夹名称为 Demo
-  return (
-    <div>{lang.Demo.text}</div>
-  );
-};
-```
-
-## 展示
-
-这里展示的是组件的用法，如果在 demo 中使用的是相对路径的方式引入，那相关文件将会被一起展示在页面上。为了更好的让用户可以复用我们的代码，所以可以在这里直接使用项目包名，这样的体验将和项目使用中一致。
+<div>
+  <img data-type="dingtalk" src="https://gw.alipayobjects.com/zos/bmw-prod/ec249703-be12-416c-8f33-297e47d9439c/kjy5ls84_w1004_h1346.png" width="300" />
+  <img data-type="wechat" src="https://gw.alipayobjects.com/zos/bmw-prod/c18bc2a5-719a-48ca-b225-c79ef88bfb43/k7m10ymd_w1004_h1346.jpeg" width="300" />
+</div>

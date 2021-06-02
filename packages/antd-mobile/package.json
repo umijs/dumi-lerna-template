@@ -1,5 +1,5 @@
 {
-  "name": "@alitajs/antd-mobile",
+  "name": "antd-mobile-a",
   "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",
@@ -12,24 +12,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alitajs/antd-mobile-plus"
+    "url": "https://github.com/umijs/dumi-lerna-template"
   },
   "keywords": [
-    "alita"
+    "dumi"
   ],
   "authors": [
-    "xiaohuoni <448627663@qq.com> (https://github.com/xiaohuoni)"
+    ""
   ],
   "license": "MIT",
-  "bugs": "http://github.com/alitajs/antd-mobile-plus/issues",
-  "homepage": "https://github.com/alitajs/antd-mobile-plus/tree/master/packages/antd-mobile#readme",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@alitajs/languages": "0.4.0",
-    "@alitajs/theme": "0.0.5-0",
-    "@alitajs/tracker": "0.5.0",
     "antd-mobile": "2.3.3",
     "classnames": "^2.2.6"
   }
